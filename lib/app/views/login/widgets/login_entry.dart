@@ -8,7 +8,7 @@ class LoginEntry extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    bool visibility_getter = ref.watch(visibility_state.notifier).state;
+    bool visibility_getter = ref.watch(visibility_state);
     return Container(
         child: Form(
       key: formKey,
@@ -51,16 +51,12 @@ class LoginEntry extends ConsumerWidget {
                         ? IconButton(
                             icon: const Icon(Icons.visibility),
                             onPressed: () {
-                              print(ref.read(visibility_state.notifier).state);
-                              print(
-                                  'visibility getter' + '${visibility_getter}');
                               ref.read(visibility_state.notifier).state = false;
                             })
                         : IconButton(
                             icon: const Icon(Icons.visibility_off),
                             onPressed: () {
                               ref.read(visibility_state.notifier).state = true;
-                              print(visibility_getter);
                             }),
                     contentPadding: const EdgeInsets.all(15),
                     hintText: 'Enter your password',

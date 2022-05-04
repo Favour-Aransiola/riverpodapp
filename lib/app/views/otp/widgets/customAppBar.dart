@@ -10,7 +10,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       IconButton(
-          icon: Icon(Icons.chevron_left_outlined, size: 30), onPressed: () {}),
+          icon: Icon(Icons.chevron_left_outlined, size: 30),
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          }),
     ]));
   }
 

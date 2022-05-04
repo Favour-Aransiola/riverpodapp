@@ -9,7 +9,7 @@ GlobalKey<FormState> formKey = GlobalKey<FormState>();
 var validator = FutureProvider<bool>((ref) => validate());
 
 emailValidator(value) {
-  if (value == null || value == '') {
+  if (value == null) {
     return 'Please Enter a value';
   } else {
     return null;
@@ -19,15 +19,16 @@ emailValidator(value) {
 passwordValidator(value) {
   if (value == null || value == '') {
     return 'Please Enter a value';
-  } else if (value != '1234') {
-    return 'Incorrect Password';
-  } else {
+  } else if (value == '1234') {
     return null;
+  } else {
+    return 'Please Enter a value';
   }
 }
 
 validate() async {
   bool validated = formKey.currentState!.validate();
+
   if (validated) {
     Future.delayed(const Duration(seconds: 3), () {
       return true;

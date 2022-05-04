@@ -24,7 +24,12 @@ class MyApp extends StatelessWidget {
           // ignore: deprecated_member_use
           accentColor: Colors.pink,
           primaryColor: Colors.pink),
-      home: const File(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const Login(),
+        '/file': (context) => const File(),
+        '/otp': (context) => const Otp()
+      },
     );
   }
 }

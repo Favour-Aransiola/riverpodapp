@@ -14,11 +14,6 @@ class Login extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Logo(),
-                  LoginText(),
-                  LoginEntry(),
-                  LoginButton()
-                ])));
+                children: [Logo(), LoginText(), LoginEntry(), LoginButton()])));
   }
 }

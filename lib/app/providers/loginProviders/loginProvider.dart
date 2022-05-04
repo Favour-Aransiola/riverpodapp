@@ -1,17 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final visibility_state = StateProvider((ref) => false);
-final is_loading = StateProvider((ref) => false);
-final formKey = GlobalKey<FormState>();
+var visibility_state = StateProvider<bool>((ref) => false);
 
-// final validator = FutureProvider((ref)=>validate());
+var is_loading = StateProvider((ref) => false);
+GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-Future validatorFunc() async {
-  Future.delayed(const Duration(seconds: 3), () {
-    return true;
-  });
-}
+var validator = FutureProvider<bool>((ref) => validate());
 
 emailValidator(value) {
   if (value == null || value == '') {
@@ -31,14 +26,11 @@ passwordValidator(value) {
   }
 }
 
-// validate()async{
-//   if (formKey.currentState!.validate()){
-//     Future.delayed(const Duration(seconds: 3), (){
-//     return true;            
-//   });
-// }else{
-//   return false;
-// }
-// }
-
-// 
+validate() async {
+  bool validated = formKey.currentState!.validate();
+  if (validated) {
+    Future.delayed(const Duration(seconds: 3), () {
+      return true;
+    });
+  }
+}

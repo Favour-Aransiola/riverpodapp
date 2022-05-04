@@ -3,11 +3,12 @@ import 'package:riverpod_test/app/extensions/extensions.dart';
 import 'package:riverpod_test/app/providers/loginProviders/loginProvider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginEntry extends StatelessWidget {
-  const LoginEntry({Key? key}) : super(key: key);
+class LoginEntry extends ConsumerWidget {
+  LoginEntry({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    bool visibility_getter = ref.watch(visibility_state.notifier).state;
     return Container(
         child: Form(
       key: formKey,
@@ -22,7 +23,7 @@ class LoginEntry extends StatelessWidget {
                 bottom: 0.04.hp(MediaQuery.of(context).size.height)),
             child: TextFormField(
               validator: (value) {
-                emailValidator(value);
+                return emailValidator(value);
               },
               decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(8),
@@ -37,35 +38,35 @@ class LoginEntry extends StatelessWidget {
               fontSize: 1.rem(MediaQuery.of(context).size.width),
             )),
         Padding(
-          padding: EdgeInsets.only(
-              top: 0.02.hp(MediaQuery.of(context).size.height),
-              bottom: 0.04.hp(MediaQuery.of(context).size.height)),
-          child: Consumer(builder: ((context, ref, child) {
-            bool visibility = ref.watch(visibility_state);
-            return TextFormField(
+            padding: EdgeInsets.only(
+                top: 0.02.hp(MediaQuery.of(context).size.height),
+                bottom: 0.04.hp(MediaQuery.of(context).size.height)),
+            child: TextFormField(
                 validator: (value) {
-                  passwordValidator(value);
+                  return passwordValidator(value);
                 },
-                obscureText: visibility,
+                obscureText: visibility_getter,
                 decoration: InputDecoration(
-                    suffixIcon: visibility == true
+                    suffixIcon: visibility_getter == true
                         ? IconButton(
                             icon: const Icon(Icons.visibility),
                             onPressed: () {
-                              visibility = false;
+                              print(ref.read(visibility_state.notifier).state);
+                              print(
+                                  'visibility getter' + '${visibility_getter}');
+                              ref.read(visibility_state.notifier).state = false;
                             })
                         : IconButton(
                             icon: const Icon(Icons.visibility_off),
                             onPressed: () {
-                              visibility = true;
+                              ref.read(visibility_state.notifier).state = true;
+                              print(visibility_getter);
                             }),
                     contentPadding: const EdgeInsets.all(15),
                     hintText: 'Enter your password',
                     fillColor: Colors.grey,
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8))));
-          })),
-        ),
+                        borderRadius: BorderRadius.circular(8))))),
         SizedBox(height: 0.01.hp(MediaQuery.of(context).size.height)),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Container(),
